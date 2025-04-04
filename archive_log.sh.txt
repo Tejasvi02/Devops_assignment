@@ -1,0 +1,14 @@
+#!/bin/bash
+
+LOG_DIR="/home/ubuntu/test1"
+ARCHIVE_DIR="/home/ubuntu/test1/archive"
+
+mkdir -p "$ARCHIVE_DIR"
+
+TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+
+#Zip and archive
+zip -j "$LOG_DIR/logs_$TIMESTAMP.zip" "$LOG_DIR"/app_*.log && mv "$LOG_DIR/logs_$TIMESTAMP.zip" "$ARCHIVE_DIR/" && rm "$LOG_DIR"/app_*.log
+
+#DELETING ARCHIVES FILES OLDER THAN 7DAYS
+find "$ARCHIVE_DIR" -name "logs_*.zip" -type f -mtime +7 -exec rm {} \;
